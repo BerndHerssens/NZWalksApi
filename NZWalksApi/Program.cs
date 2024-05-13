@@ -1,4 +1,5 @@
 
+using NZWalksApi.Business.Services;
 using NZWalksApi.Data.Repositories;
 
 namespace NZWalksApi
@@ -19,7 +20,7 @@ namespace NZWalksApi
 
             //Add dependencies here:
             builder.Services.AddScoped<IWalkRepository, WalkRepository>();
-
+            builder.Services.AddScoped<IWalkService, WalkService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
