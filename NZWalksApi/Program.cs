@@ -1,4 +1,6 @@
 
+using NZWalksApi.Data.Repositories;
+
 namespace NZWalksApi
 {
     public class Program
@@ -13,6 +15,10 @@ namespace NZWalksApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            //Add dependencies here:
+            builder.Services.AddScoped<IWalkRepository, WalkRepository>();
 
             var app = builder.Build();
 

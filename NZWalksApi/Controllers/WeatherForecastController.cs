@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using NZWalksApi.Business.Models;
 
 namespace NZWalksApi.Controllers
 {

@@ -1,4 +1,4 @@
-namespace NZWalksApi
+namespace NZWalksApi.Business.Models
 {
     public class WeatherForecast
     {
