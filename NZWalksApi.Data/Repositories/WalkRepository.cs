@@ -58,5 +58,12 @@ namespace NZWalksApi.Data.Repositories
         {
             return walks;
         }
+
+        public void AddWalk(WalkEntity walkEntity)
+        {
+            int ID = walks.Max(x => x.ID) + 1;
+            walkEntity.ID = ID;
+            walks.Add(walkEntity);
+        }
     }
 }

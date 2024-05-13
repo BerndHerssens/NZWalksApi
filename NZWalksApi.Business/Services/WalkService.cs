@@ -51,5 +51,16 @@ namespace NZWalksApi.Business.Services
             }
             return walks;
         }
+
+        public void AddWalk(Walk walk)
+        {
+            WalkEntity walkEntity = new WalkEntity();
+            walkEntity.Name = walk.Name;
+            walkEntity.Description = walk.Description;
+            walkEntity.LengthInKm = walk.LengthInKm;
+            walkEntity.Created = DateTime.Now;
+            walkEntity.Updated = DateTime.Now;
+            _walkRepository.AddWalk(walkEntity);
+        }
     }
 }

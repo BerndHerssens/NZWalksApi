@@ -13,6 +13,6 @@ namespace NZWalksApi.Data.Entities
         public string Description { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public double LengthInKm { get; internal set; }
+        public double LengthInKm { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace NZWalksApi
 
 
             //Add dependencies here:
-            builder.Services.AddScoped<IWalkRepository, WalkRepository>();
+            builder.Services.AddSingleton<IWalkRepository, WalkRepository>();
             builder.Services.AddScoped<IWalkService, WalkService>();
             var app = builder.Build();
 

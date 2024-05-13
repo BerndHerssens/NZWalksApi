@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
+using NZWalksApi.DTO;
 
 namespace NZWalksApi.Controllers
 {
@@ -16,9 +15,9 @@ namespace NZWalksApi.Controllers
             _walkservice = walkService;
         }
         [HttpGet]
-        [Route("GetWalk/{id:int}")]
+        //[Route("GetWalk/{id:int}")]
         public ActionResult<Walk> GetSpecificWalk(int id)
-        {  
+        {
             Walk walk = _walkservice.GetWalk(id);
             if (walk == null)
             {
@@ -28,7 +27,16 @@ namespace NZWalksApi.Controllers
             {
                 return Ok(walk);
             }
-            
+        }
+        [HttpPost]
+        public ActionResult AddWalk(AddWalkDTO addWalk)
+        {
+            Walk walk = new Walk();
+            walk.Name = addWalk.Name;
+            walk.Description = addWalk.Description;
+            walk.LengthInKm = addWalk.LengthInKm;
+            _walkservice.AddWalk(walk);
+            return Created();
         }
     }
 }
