@@ -1,11 +1,6 @@
-﻿using NZWalksApi.Data.Repositories;
-using NZWalksApi.Business.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NZWalksApi.Business.Models;
 using NZWalksApi.Data.Entities;
+using NZWalksApi.Data.Repositories;
 
 namespace NZWalksApi.Business.Services
 {
@@ -22,7 +17,7 @@ namespace NZWalksApi.Business.Services
         {
             Walk walk = new Walk();
             WalkEntity walkEntity = _walkRepository.GetWalkByID(id);
-           
+
             if (walkEntity == null)
             {
                 return null;
@@ -61,6 +56,21 @@ namespace NZWalksApi.Business.Services
             walkEntity.Created = DateTime.Now;
             walkEntity.Updated = DateTime.Now;
             _walkRepository.AddWalk(walkEntity);
+        }
+
+        public void DeleteWalkById(int id)
+        {
+            _walkRepository.DeleteWalkByID(id);
+        }
+
+        public void UpdateWalk(int id, Walk walk)
+        {
+            WalkEntity existingWalkEnt = _walkRepository.GetWalkByID(id);
+            existingWalkEnt.Name = walk.Name;
+            existingWalkEnt.Description = walk.Description;
+            existingWalkEnt.LengthInKm = walk.LengthInKm;
+            existingWalkEnt.Updated = DateTime.Now;
+            _walkRepository.UpdateWalk(id, existingWalkEnt);
         }
     }
 }

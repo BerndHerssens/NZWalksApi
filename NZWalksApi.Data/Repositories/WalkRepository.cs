@@ -1,9 +1,4 @@
 ﻿using NZWalksApi.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NZWalksApi.Data.Repositories
 {
@@ -64,6 +59,18 @@ namespace NZWalksApi.Data.Repositories
             int ID = walks.Max(x => x.ID) + 1;
             walkEntity.ID = ID;
             walks.Add(walkEntity);
+        }
+
+        public void DeleteWalkByID(int id)
+        {
+            WalkEntity walkEntity = walks.Find(x => x.ID == id);
+            walks.Remove(walkEntity);
+        }
+
+        public void UpdateWalk(int id, WalkEntity walkEntity)
+        {
+            WalkEntity entityToUpdate = walks.Find(x => x.ID == id);
+            entityToUpdate = walkEntity;
         }
     }
 }

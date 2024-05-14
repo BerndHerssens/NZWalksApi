@@ -38,5 +38,24 @@ namespace NZWalksApi.Controllers
             _walkservice.AddWalk(walk);
             return Created();
         }
+        [HttpDelete]
+        public ActionResult DeleteWalk(int id)
+        {
+            _walkservice.DeleteWalkById(id);
+            return Created();
+        }
+
+        [HttpPut]
+        public ActionResult UpdateWalk(int id, UpdateWalkDTO updateWalk)
+        {
+            Walk walk = new Walk
+            {
+                Name = updateWalk.Name,
+                Description = updateWalk.Description,
+                LengthInKm = updateWalk.LengthInKm
+            };
+            _walkservice.UpdateWalk(id, walk);
+            return Created();
+        }
     }
 }
