@@ -76,5 +76,10 @@ namespace NZWalksApi.Data.Repositories
             WalkEntity entityToUpdate = walks.Find(x => x.ID == id);
             entityToUpdate = walkEntity;
         }
+
+        public List<WalkEntity> GetWalksByRegionID(int regionId)
+        {
+            return walks.Where(x => x.RegionID == regionId).ToList();
+        }
     }
 }

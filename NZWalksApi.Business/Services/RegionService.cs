@@ -8,12 +8,14 @@ namespace NZWalksApi.Business.Services
     public class RegionService : IRegionService
     {
         private readonly IRegionRepository _regionRepository;
+        private IWalkRepository _walkRepository;
         private IMapper _mapper;
 
-        public RegionService(IRegionRepository regionRepository, IMapper mapper)
+        public RegionService(IRegionRepository regionRepository, IMapper mapper, IWalkRepository walkRepository)
         {
             _regionRepository = regionRepository;
             _mapper = mapper;
+            _walkRepository = walkRepository;
         }
 
         public Region GetRegion(int id)
@@ -53,7 +55,16 @@ namespace NZWalksApi.Business.Services
 
         public IEnumerable<Region> GetAllRegionsWithWalks()
         {
-            throw new NotImplementedException();
+            IEnumerable<RegionEntity> regionEntities = _regionRepository.GetAllRegions();
+            IEnumerable<Region> allRegions = _mapper.Map<IEnumerable<Region>>(regionEntities);
+           
+            foreach(Region region in allRegions)
+            {
+                List<WalkEntity> walkEntities = _walkRepository.GetWalksByRegionID(region.ID);
+                List<Walk> walks = _mapper.Map<List<Walk>>(walkEntities);
+                region.WalksInRegion = walks;
+            }
+            return allRegions;
         }
 
         public void UpdateRegion(int id, Region region)
