@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
 using NZWalksApi.DTO;
@@ -10,9 +11,11 @@ namespace NZWalksApi.Controllers
     public class WalksController : ControllerBase
     {
         private IWalkService _walkservice;
-        public WalksController(IWalkService walkService)
+        private IMapper _mapper;
+        public WalksController(IWalkService walkService, IMapper mapper)
         {
             _walkservice = walkService;
+            _mapper = mapper;
         }
         [HttpGet]
         //[Route("GetWalk/{id:int}")]
@@ -31,10 +34,7 @@ namespace NZWalksApi.Controllers
         [HttpPost]
         public ActionResult AddWalk(AddWalkDTO addWalk)
         {
-            Walk walk = new Walk();
-            walk.Name = addWalk.Name;
-            walk.Description = addWalk.Description;
-            walk.LengthInKm = addWalk.LengthInKm;
+            Walk walk = _mapper.Map<Walk>(addWalk);
             _walkservice.AddWalk(walk);
             return Created();
         }
@@ -48,12 +48,7 @@ namespace NZWalksApi.Controllers
         [HttpPut]
         public ActionResult UpdateWalk(int id, UpdateWalkDTO updateWalk)
         {
-            Walk walk = new Walk
-            {
-                Name = updateWalk.Name,
-                Description = updateWalk.Description,
-                LengthInKm = updateWalk.LengthInKm
-            };
+            Walk walk = _mapper.Map<Walk>(updateWalk);
             _walkservice.UpdateWalk(id, walk);
             return Created();
         }
