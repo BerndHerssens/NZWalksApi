@@ -1,4 +1,5 @@
-﻿using NZWalksApi.Business.Models;
+﻿using AutoMapper;
+using NZWalksApi.Business.Models;
 using NZWalksApi.Data.Entities;
 using NZWalksApi.Data.Repositories;
 
@@ -7,10 +8,12 @@ namespace NZWalksApi.Business.Services
     public class WalkService : IWalkService
     {
         private readonly IWalkRepository _walkRepository;
+        private IMapper _mapper;
 
-        public WalkService(IWalkRepository walkRepository)
+        public WalkService(IWalkRepository walkRepository, IMapper mapper)
         {
             _walkRepository = walkRepository;
+            _mapper = mapper;
         }
 
         public Walk GetWalk(int id)
@@ -23,10 +26,8 @@ namespace NZWalksApi.Business.Services
                 return null;
             }
 
-            walk.ID = walkEntity.ID;
-            walk.Name = walkEntity.Name;
-            walk.Description = walkEntity.Description;
-            walk.LengthInKm = walkEntity.LengthInKm;
+            walk = _mapper.Map<Walk>(walkEntity);
+
             return walk;
         }
 
@@ -49,10 +50,7 @@ namespace NZWalksApi.Business.Services
 
         public void AddWalk(Walk walk)
         {
-            WalkEntity walkEntity = new WalkEntity();
-            walkEntity.Name = walk.Name;
-            walkEntity.Description = walk.Description;
-            walkEntity.LengthInKm = walk.LengthInKm;
+            WalkEntity walkEntity = _mapper.Map<WalkEntity>(walk);
             walkEntity.Created = DateTime.Now;
             walkEntity.Updated = DateTime.Now;
             _walkRepository.AddWalk(walkEntity);
@@ -66,9 +64,7 @@ namespace NZWalksApi.Business.Services
         public void UpdateWalk(int id, Walk walk)
         {
             WalkEntity existingWalkEnt = _walkRepository.GetWalkByID(id);
-            existingWalkEnt.Name = walk.Name;
-            existingWalkEnt.Description = walk.Description;
-            existingWalkEnt.LengthInKm = walk.LengthInKm;
+            existingWalkEnt = _mapper.Map<WalkEntity>(walk);
             existingWalkEnt.Updated = DateTime.Now;
             _walkRepository.UpdateWalk(id, existingWalkEnt);
         }
