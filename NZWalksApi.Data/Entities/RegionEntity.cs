@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,19 @@ namespace NZWalksApi.Data.Entities
     public class RegionEntity : IEntity
     {
         public DateTime Created { get ; set ; }
+
         public int ID { get ; set ; }
+
         public DateTime Updated { get; set; }
+
         public BeautyGrade BeautyGrade { get; set; }
+
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
-        public string Description { get; set; }
+
+        [MaxLength(500)]
+        public string? Description { get; set; }
 
         //Navigation properties
         public List<WalkEntity> Walks { get; set; }

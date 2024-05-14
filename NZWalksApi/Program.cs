@@ -1,5 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NZWalksApi.Business.Services;
+using NZWalksApi.Data;
 using NZWalksApi.Data.Repositories;
 
 namespace NZWalksApi
@@ -25,6 +28,13 @@ namespace NZWalksApi
             builder.Services.AddScoped<IRegionService, RegionService>();
             //Automapper gets installed here
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //Add dependency to database here:
+            //Do not add connectionstring here in production!! This is sensitive information!!
+            //TODO: replace: DESKTOP-JQ22R14 with own credential
+            string connectionString = "Data Source=DESKTOP-JQ22R14;Initial Catalog=NZWAlksDB;Integrated Security=True;TrustServerCertificate=True;";
+            builder.Services.AddDbContext<NZWalksDBContext>(
+                options => options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
