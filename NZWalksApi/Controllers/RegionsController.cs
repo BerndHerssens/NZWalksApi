@@ -35,9 +35,18 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         [Route("GetAllRegions")]
-        public ActionResult<Region> GetAllRegions()
+        public ActionResult<Region> GetAllRegions(bool incloudWalks)
         {
-            IEnumerable<Region> regions = _regionService.GetAllRegions();
+            IEnumerable<Region> regions;
+            if (incloudWalks)
+            {
+                regions = _regionService.GetAllRegionsWithWalks();
+            }
+            else
+            {
+                 regions = _regionService.GetAllRegions();
+            }
+          
             if (regions == null || regions.Count() == 0)
             {
                 return NotFound();
@@ -55,5 +64,7 @@ namespace NZWalksApi.Controllers
             _regionService.AddRegion(region);
             return Created();
         }
+
+
     }
 }
