@@ -14,5 +14,6 @@ namespace NZWalksApi.Business.Models
         public string Name { get; set; }
         public string Beschrijving { get; set; }
         public BeautyGrade BeautyGrade { get; set; }
+        public List<Walk> WalksInRegion { get; set; } = new List<Walk>();
     }
 }

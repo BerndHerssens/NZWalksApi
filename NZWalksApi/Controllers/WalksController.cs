@@ -31,6 +31,20 @@ namespace NZWalksApi.Controllers
                 return Ok(walk);
             }
         }
+        [HttpGet]
+        [Route("GetAllWalks")]
+        public ActionResult<Walk> GetAllWalks()
+        {
+            IEnumerable<Walk> walks = _walkservice.GetAllWalks();
+            if (walks == null || walks.Count() == 0 )
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(walks);
+            }
+        }
         [HttpPost]
         public ActionResult AddWalk(AddWalkDTO addWalk)
         {

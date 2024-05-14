@@ -33,6 +33,20 @@ namespace NZWalksApi.Controllers
                 return Ok(region);
             }
         }
+        [HttpGet]
+        [Route("GetAllRegions")]
+        public ActionResult<Region> GetAllRegions()
+        {
+            IEnumerable<Region> regions = _regionService.GetAllRegions();
+            if (regions == null || regions.Count() == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(regions);
+            }
+        }
 
         [HttpPost]
         public ActionResult AddRegion (AddRegionDTO addRagion)

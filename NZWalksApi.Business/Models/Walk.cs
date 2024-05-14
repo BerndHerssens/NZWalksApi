@@ -8,5 +8,6 @@
         public double LengthInKm { get; set; }
         public double LengthInMeters { get { return LengthInKm * 1000; } }
         public double LengthInMiles { get { return LengthInKm / 1.6; } }
+        public Region Region { get; set; }
     }
 }

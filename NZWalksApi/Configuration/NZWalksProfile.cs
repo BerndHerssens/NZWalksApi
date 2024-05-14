@@ -5,9 +5,9 @@ using NZWalksApi.DTO;
 
 namespace NZWalksApi.Configuration
 {
-    public class AutomapperAPIProfile : Profile
+    public class NZWalksProfile : Profile
     {
-        public AutomapperAPIProfile()
+        public NZWalksProfile()
         {
             CreateMap<AddWalkDTO, Walk>();
             CreateMap<AddRegionDTO, Region>();
