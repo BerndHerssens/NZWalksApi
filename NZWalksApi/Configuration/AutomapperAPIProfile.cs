@@ -10,8 +10,14 @@ namespace NZWalksApi.Configuration
         public AutomapperAPIProfile()
         {
             CreateMap<AddWalkDTO, Walk>();
+            CreateMap<AddRegionDTO, Region>();
             CreateMap<UpdateWalkDTO, Walk>();
             CreateMap<Walk, WalkEntity>().ReverseMap();
+
+            //Property expliciet mappen
+            CreateMap<RegionEntity, Region>()
+                .ForMember(x => x.Beschrijving, y => y.MapFrom(z => z.Description))
+                .ReverseMap();
         }
     }
 }

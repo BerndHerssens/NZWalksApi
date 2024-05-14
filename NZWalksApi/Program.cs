@@ -21,6 +21,8 @@ namespace NZWalksApi
             //Add dependencies here:
             builder.Services.AddSingleton<IWalkRepository, WalkRepository>();
             builder.Services.AddScoped<IWalkService, WalkService>();
+            builder.Services.AddSingleton<IRegionRepository, RegionRepository>();
+            builder.Services.AddScoped<IRegionService, RegionService>();
             //Automapper gets installed here
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

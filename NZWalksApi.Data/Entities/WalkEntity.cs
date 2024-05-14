@@ -14,5 +14,9 @@ namespace NZWalksApi.Data.Entities
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public double LengthInKm { get; set; }
+
+        //Navigation properties
+        public int RegionID { get; set; }
+        public RegionEntity Region { get; set; }
     }
 }
