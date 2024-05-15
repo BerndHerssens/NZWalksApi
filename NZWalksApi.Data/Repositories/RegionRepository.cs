@@ -1,4 +1,6 @@
-﻿using NZWalksApi.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NZWalksApi.Data.Entities;
+
 
 namespace NZWalksApi.Data.Repositories
 {
@@ -13,12 +15,12 @@ namespace NZWalksApi.Data.Repositories
 
         public RegionEntity GetRegionByID(int id)
         {
-            return _dbContext.Regions.SingleOrDefault(x => x.ID == id);
+            return _dbContext.Regions.Include(x=>x.Walks).SingleOrDefault(x => x.ID == id);
         }
 
         public IEnumerable<RegionEntity> GetAllRegions()
         {
-            return _dbContext.Regions;
+            return _dbContext.Regions.Include(x => x.Walks);
         }
 
         public void AddRegion(RegionEntity regionEntity)
@@ -29,7 +31,11 @@ namespace NZWalksApi.Data.Repositories
 
         public void DeleteRegionByID(int id)
         {
-            _dbContext.Regions.Remove(GetRegionByID(id)); //TODO: dit kan beter
+            RegionEntity regionEntity = new RegionEntity()
+            {
+                ID = id
+            };
+            _dbContext.Regions.Remove(regionEntity);
             _dbContext.SaveChanges();
         }
 

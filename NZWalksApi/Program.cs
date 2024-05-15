@@ -32,7 +32,7 @@ namespace NZWalksApi
             //Add dependency to database here:
             //Do not add connectionstring here in production!! This is sensitive information!!
             //TODO: replace: DESKTOP-JQ22R14 with own credential
-            string connectionString = "Data Source=.;Initial Catalog=NZWAlksDB;Integrated Security=True;TrustServerCertificate=True;";
+            string connectionString = builder.Configuration.GetConnectionString("NZConnectionString");
             builder.Services.AddDbContext<NZWalksDBContext>(
                 options => options.UseSqlServer(connectionString));
 

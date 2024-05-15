@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NZWalksApi.Data;
 
@@ -11,9 +12,11 @@ using NZWalksApi.Data;
 namespace NZWalksApi.Data.Migrations
 {
     [DbContext(typeof(NZWalksDBContext))]
-    partial class NZWalksDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240515121104_walksNZ")]
+    partial class walksNZ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,19 +60,19 @@ namespace NZWalksApi.Data.Migrations
                         {
                             ID = 1,
                             BeautyGrade = 4,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(5951),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2470),
                             Description = "They make Path of Exile here...",
                             Name = "Auckland",
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6002)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2514)
                         },
                         new
                         {
                             ID = 2,
                             BeautyGrade = 2,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6005),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2518),
                             Description = "Best day hike for active families 13km (8 miles), 4-5 hours, easy to moderate.",
                             Name = "Kosciuszko",
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6006)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2519)
                         });
                 });
 
@@ -112,42 +115,42 @@ namespace NZWalksApi.Data.Migrations
                         new
                         {
                             ID = 1,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6078),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2585),
                             Description = "This is a beautiful walk by the ocean",
                             LengthInKm = 20.5,
                             Name = "Great ocean walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6079)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2586)
                         },
                         new
                         {
                             ID = 2,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6083),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2589),
                             Description = "This is a beautiful walk in the forrest",
                             LengthInKm = 10.5,
                             Name = "Great forrest walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6083)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2590)
                         },
                         new
                         {
                             ID = 3,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6085),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2592),
                             Description = "This is a beautiful walk by a lake",
                             LengthInKm = 15.5,
                             Name = "Great lake walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6086)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2593)
                         },
                         new
                         {
                             ID = 4,
-                            Created = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6088),
+                            Created = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2595),
                             Description = "This is a beautiful walk in the mountains",
                             LengthInKm = 18.5,
                             Name = "Great mountain walk",
                             RegionID = 2,
-                            Updated = new DateTime(2024, 5, 15, 14, 13, 49, 987, DateTimeKind.Local).AddTicks(6089)
+                            Updated = new DateTime(2024, 5, 15, 14, 11, 4, 478, DateTimeKind.Local).AddTicks(2596)
                         });
                 });
 

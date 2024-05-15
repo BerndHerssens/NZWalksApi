@@ -21,23 +21,27 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Region> GetSpecificRegion(int id)
+        public ActionResult<RegionDTO> GetSpecificRegion(int id)
         {
             Region region = _regionService.GetRegion(id);
+            RegionDTO regionDTO = _mapper.Map<RegionDTO>(region);
+
             if (region == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(region);
+                return Ok(regionDTO);
             }
         }
         [HttpGet]
         [Route("GetAllRegions")]
-        public ActionResult<Region> GetAllRegions(bool incloudWalks)
+        public ActionResult<IEnumerable<RegionDTO>>GetAllRegions(bool incloudWalks)
         {
             IEnumerable<Region> regions;
+            IEnumerable<RegionDTO> regionsDTO;
+
             if (incloudWalks)
             {
                 regions = _regionService.GetAllRegionsWithWalks();
@@ -46,14 +50,15 @@ namespace NZWalksApi.Controllers
             {
                  regions = _regionService.GetAllRegions();
             }
-          
+             regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
+
             if (regions == null || regions.Count() == 0)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(regions);
+                return Ok(regionsDTO);
             }
         }
 
