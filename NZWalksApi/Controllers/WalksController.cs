@@ -19,30 +19,34 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         //[Route("GetWalk/{id:int}")]
-        public ActionResult<Walk> GetSpecificWalk(int id)
+        public ActionResult<WalkDTO> GetSpecificWalk(int id)
         {
             Walk walk = _walkservice.GetWalk(id);
+            WalkDTO dto = _mapper.Map<WalkDTO>(walk);
+
             if (walk == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(walk);
+                return Ok(dto);
             }
         }
         [HttpGet]
         [Route("GetAllWalks")]
-        public ActionResult<Walk> GetAllWalks()
+        public ActionResult<WalkDTO> GetAllWalks()
         {
             IEnumerable<Walk> walks = _walkservice.GetAllWalks();
+            IEnumerable< WalkDTO > walkDtos = _mapper.Map<IEnumerable<WalkDTO>>(walks);
+
             if (walks == null || walks.Count() == 0 )
             {
                 return NotFound();
             }
             else
             {
-                return Ok(walks);
+                return Ok(walkDtos);
             }
         }
         [HttpPost]
@@ -52,6 +56,7 @@ namespace NZWalksApi.Controllers
             _walkservice.AddWalk(walk);
             return Created();
         }
+
         [HttpDelete]
         public ActionResult DeleteWalk(int id)
         {

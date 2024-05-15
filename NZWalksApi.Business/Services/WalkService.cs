@@ -35,16 +35,9 @@ namespace NZWalksApi.Business.Services
         {
             List<Walk> walks = new List<Walk>();
             IEnumerable<WalkEntity> walkEntities = _walkRepository.GetAllWalks();
+
             // Map the WalkEntities to Walk models
-            foreach (WalkEntity walkEntity in walkEntities)
-            {
-                Walk walk = new Walk();
-                walk.ID = walkEntity.ID;
-                walk.Name = walkEntity.Name;
-                walk.Description = walkEntity.Description;
-                walk.LengthInKm = walkEntity.LengthInKm;
-                walks.Add(walk);
-            }
+            walks = _mapper.Map<List<Walk>>(walkEntities);
             return walks;
         }
 
@@ -63,10 +56,18 @@ namespace NZWalksApi.Business.Services
 
         public void UpdateWalk(int id, Walk walk)
         {
-            WalkEntity existingWalkEnt = _walkRepository.GetWalkByID(id);
-            existingWalkEnt = _mapper.Map<WalkEntity>(walk);
-            existingWalkEnt.Updated = DateTime.Now;
-            _walkRepository.UpdateWalk(id, existingWalkEnt);
+            WalkEntity existingWalk = _walkRepository.GetWalkByID(id);
+            WalkEntity updatedWalkEntity = _mapper.Map<WalkEntity>(walk);
+
+            existingWalk.Description = updatedWalkEntity.Description;
+            existingWalk.Region = updatedWalkEntity.Region; // TODO
+            existingWalk.RegionID = updatedWalkEntity.RegionID;
+            existingWalk.LengthInKm = updatedWalkEntity.LengthInKm;
+            existingWalk.Name = updatedWalkEntity.Name;
+
+            existingWalk.Updated = DateTime.Now;
+            _walkRepository.UpdateWalk(id, existingWalk);
+
         }
     }
 }

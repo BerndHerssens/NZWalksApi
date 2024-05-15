@@ -1,4 +1,5 @@
-﻿using NZWalksApi.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NZWalksApi.Data.Entities;
 
 namespace NZWalksApi.Data.Repositories
 {
@@ -13,12 +14,14 @@ namespace NZWalksApi.Data.Repositories
 
         public WalkEntity GetWalkByID(int id)
         {
-            return _dbContext.Walks.SingleOrDefault(x => x.ID == id);
+            return _dbContext.Walks
+                .Include(x => x.Region)
+                .SingleOrDefault(x => x.ID == id);
         }
 
         public IEnumerable<WalkEntity> GetAllWalks()
         {
-            return _dbContext.Walks;
+            return _dbContext.Walks.Include(x => x.Region);
         }
 
         public void AddWalk(WalkEntity walkEntity)

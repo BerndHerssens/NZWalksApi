@@ -17,9 +17,15 @@ namespace NZWalksApi.Configuration
             //Property expliciet mappen
             CreateMap<RegionEntity, Region>()
                 .ForMember(x => x.Beschrijving, y => y.MapFrom(z => z.Description))
+                .ForMember(x => x.WalksInRegion, y => y.MapFrom(z => z.Walks))
                 .ReverseMap();
 
             CreateMap<UpdateRegionDTO, Region>();
+
+            CreateMap<Walk, WalkDTO>()
+                .ForMember(x => x.RegioNaam, y => y.MapFrom(z => z.Region.Name))
+                .ForMember(x => x.RegioBeschrijving, y => y.MapFrom(z => z.Region.Beschrijving));
+
         }
     }
 }
