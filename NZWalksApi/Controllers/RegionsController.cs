@@ -64,7 +64,20 @@ namespace NZWalksApi.Controllers
             _regionService.AddRegion(region);
             return Created();
         }
+        [HttpDelete]
+        public ActionResult DeleteRegion(int id)
+        {
+            _regionService.DeleteRegionById(id);
+            return Created();
+        }
 
+        [HttpPut]
+        public ActionResult UpdateRegion(int id, UpdateRegionDTO updateRegion)
+        {
+            Region region = _mapper.Map<Region>(updateRegion);
+            _regionService.UpdateRegion(id, region);
+            return Created();
+        }
 
     }
 }

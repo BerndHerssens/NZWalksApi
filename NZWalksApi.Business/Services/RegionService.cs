@@ -50,7 +50,7 @@ namespace NZWalksApi.Business.Services
 
         public void DeleteRegionById(int id)
         {
-            throw new NotImplementedException();
+            _regionRepository.DeleteRegionByID(id);
         }
 
         public IEnumerable<Region> GetAllRegionsWithWalks()
@@ -69,7 +69,16 @@ namespace NZWalksApi.Business.Services
 
         public void UpdateRegion(int id, Region region)
         {
-            throw new NotImplementedException();
+            RegionEntity objectDB = _regionRepository.GetRegionByID(id);
+
+            RegionEntity updatedObject = _mapper.Map<RegionEntity>(region);
+            
+            objectDB.Name = updatedObject.Name;
+            objectDB.BeautyGrade = updatedObject.BeautyGrade;
+            objectDB.Walks = updatedObject.Walks;
+            objectDB.Description = updatedObject.Description;
+            objectDB.Updated = DateTime.Now;
+            _regionRepository.UpdateRegion(id,objectDB);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace NZWalksApi.Configuration
             CreateMap<RegionEntity, Region>()
                 .ForMember(x => x.Beschrijving, y => y.MapFrom(z => z.Description))
                 .ReverseMap();
+
+            CreateMap<UpdateRegionDTO, Region>();
         }
     }
 }
