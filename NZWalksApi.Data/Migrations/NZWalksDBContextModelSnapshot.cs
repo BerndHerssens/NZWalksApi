@@ -57,19 +57,19 @@ namespace NZWalksApi.Data.Migrations
                         {
                             ID = 1,
                             BeautyGrade = 4,
-                            Created = new DateTime(2024, 5, 15, 8, 49, 25, 800, DateTimeKind.Local).AddTicks(6584),
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(6978),
                             Description = "They make Path of Exile here...",
                             Name = "Auckland",
-                            Updated = new DateTime(2024, 5, 15, 8, 49, 25, 800, DateTimeKind.Local).AddTicks(6665)
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7025)
                         },
                         new
                         {
                             ID = 2,
                             BeautyGrade = 2,
-                            Created = new DateTime(2024, 5, 15, 8, 49, 25, 800, DateTimeKind.Local).AddTicks(6672),
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7028),
                             Description = "Best day hike for active families 13km (8 miles), 4-5 hours, easy to moderate.",
                             Name = "Kosciuszko",
-                            Updated = new DateTime(2024, 5, 15, 8, 49, 25, 800, DateTimeKind.Local).AddTicks(6673)
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7029)
                         });
                 });
 
@@ -107,6 +107,48 @@ namespace NZWalksApi.Data.Migrations
                     b.HasIndex("RegionID");
 
                     b.ToTable("Walks");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7096),
+                            Description = "This is a beautiful walk by the ocean",
+                            LengthInKm = 20.5,
+                            Name = "Great ocean walk",
+                            RegionID = 1,
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7097)
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7102),
+                            Description = "This is a beautiful walk in the forrest",
+                            LengthInKm = 10.5,
+                            Name = "Great forrest walk",
+                            RegionID = 1,
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7103)
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7104),
+                            Description = "This is a beautiful walk by a lake",
+                            LengthInKm = 15.5,
+                            Name = "Great lake walk",
+                            RegionID = 1,
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7105)
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Created = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7107),
+                            Description = "This is a beautiful walk in the mountains",
+                            LengthInKm = 18.5,
+                            Name = "Great mountain walk",
+                            RegionID = 2,
+                            Updated = new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7108)
+                        });
                 });
 
             modelBuilder.Entity("NZWalksApi.Data.Entities.WalkEntity", b =>

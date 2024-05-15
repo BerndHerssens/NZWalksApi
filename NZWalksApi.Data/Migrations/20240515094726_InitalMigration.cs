@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace NZWalksApi.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitalMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +52,26 @@ namespace NZWalksApi.Data.Migrations
                         principalTable: "Regions",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Regions",
+                columns: new[] { "ID", "BeautyGrade", "Created", "Description", "Name", "Updated" },
+                values: new object[,]
+                {
+                    { 1, 4, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(6978), "They make Path of Exile here...", "Auckland", new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7025) },
+                    { 2, 2, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7028), "Best day hike for active families 13km (8 miles), 4-5 hours, easy to moderate.", "Kosciuszko", new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7029) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Walks",
+                columns: new[] { "ID", "Created", "Description", "LengthInKm", "Name", "RegionID", "Updated" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7096), "This is a beautiful walk by the ocean", 20.5, "Great ocean walk", 1, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7097) },
+                    { 2, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7102), "This is a beautiful walk in the forrest", 10.5, "Great forrest walk", 1, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7103) },
+                    { 3, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7104), "This is a beautiful walk by a lake", 15.5, "Great lake walk", 1, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7105) },
+                    { 4, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7107), "This is a beautiful walk in the mountains", 18.5, "Great mountain walk", 2, new DateTime(2024, 5, 15, 11, 47, 25, 897, DateTimeKind.Local).AddTicks(7108) }
                 });
 
             migrationBuilder.CreateIndex(

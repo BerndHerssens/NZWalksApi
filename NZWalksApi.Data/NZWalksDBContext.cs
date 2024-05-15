@@ -18,7 +18,64 @@ namespace NZWalksApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder) //seeding: dummy data 
         {
             base.OnModelCreating(modelBuilder);
-            List<RegionEntity> regions = new List<RegionEntity>()
+
+            List<RegionEntity> regions = GenerateRegions();
+            modelBuilder.Entity<RegionEntity>().HasData(regions);
+
+            List<WalkEntity> walks = GenerateWalks();
+            modelBuilder.Entity<WalkEntity>().HasData(walks);
+        }
+
+        private List<WalkEntity> GenerateWalks()
+        {
+            return new List<WalkEntity>()
+            {
+                new WalkEntity()
+                {
+                    ID = 1,
+                    Name = "Great ocean walk",
+                    Description = "This is a beautiful walk by the ocean",
+                    LengthInKm = 20.5,
+                    RegionID = 1,
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                },
+                new WalkEntity()
+                {
+                    ID = 2,
+                    Name = "Great forrest walk",
+                    Description = "This is a beautiful walk in the forrest",
+                    LengthInKm = 10.5,
+                    RegionID = 1,
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                },
+                new WalkEntity()
+                {
+                    ID = 3,
+                    Name = "Great lake walk",
+                    Description = "This is a beautiful walk by a lake",
+                    LengthInKm = 15.5,
+                    RegionID = 1,
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                },
+                new WalkEntity()
+                {
+                    ID = 4,
+                    Name = "Great mountain walk",
+                    Description = "This is a beautiful walk in the mountains",
+                    LengthInKm = 18.5,
+                    RegionID = 2,
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                },
+            };
+        }
+
+        private List<RegionEntity> GenerateRegions()
+        {
+            return new List<RegionEntity>()
             {
                 new RegionEntity()
                 {
@@ -39,7 +96,6 @@ namespace NZWalksApi.Data
                     Updated = DateTime.Now,
                 }
             };
-            modelBuilder.Entity<RegionEntity>().HasData(regions);
         }
     }
 }
