@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
@@ -35,6 +36,7 @@ namespace NZWalksApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         [Route("GetAllRegions")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> GetAllRegionsAsync(bool incloudWalks)

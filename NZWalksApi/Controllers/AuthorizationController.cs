@@ -13,40 +13,47 @@ namespace NZWalksApi.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private string CreateJWTToken(IdentityUser identityUser, List<string> roles)
+        private const string secret = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
+
+
+        private string CreateJWTToken()
         {
+            var tokenHandler  = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(secret);
 
-            string secret = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn"; 
-            string issuer = "http://localhost:5162/";
-            string audience = "http://localhost:5162/";
-            var claims = new List<Claim>();
-            var Jos = new IdentityUser();
-            Jos.Email = "foebar@gmail.com";
-            roles = new List<string>();
-            roles.Add("admin");
-            claims.Add(new Claim(ClaimTypes.Email, Jos.Email)); //hier kijken we welke claims deze identityUser heeft
-
-            foreach (var role in roles) //hier geven we hem dan de rollen aan de hand van zijn claims
+            var claims = new List<Claim>
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(JwtRegisteredClaimNames.Sub, "foo@bar.com"),
+                new(JwtRegisteredClaimNames.Email, "foo@bar.com"),
+                new("userId", "-1")
+            };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1),
+                Issuer = "http://localhost:5162/",
+                Audience = "http://localhost:5162/",
+                SigningCredentials = new SigningCredentials
+                (
+                    new SymmetricSecurityKey(key), 
+                    SecurityAlgorithms.HmacSha256
 
-            var token = new JwtSecurityToken(
-                issuer,
-                audience,
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credentials);
+                )
+            };
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            string jwt = tokenHandler.WriteToken(token);
+
+            return jwt;
+           
         }
+
         [HttpGet]
         public ActionResult Login()
         {
-            return Ok(CreateJWTToken(null,null));
+            return Ok(CreateJWTToken());
         }
     }
 }
