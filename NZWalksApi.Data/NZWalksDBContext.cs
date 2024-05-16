@@ -19,83 +19,62 @@ namespace NZWalksApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            List<RegionEntity> regions = GenerateRegions();
+            List<RegionEntity> regions = GenerateRegions(10);
             modelBuilder.Entity<RegionEntity>().HasData(regions);
 
-            List<WalkEntity> walks = GenerateWalks();
+            List<WalkEntity> walks = GenerateWalks(50);
             modelBuilder.Entity<WalkEntity>().HasData(walks);
         }
 
-        private List<WalkEntity> GenerateWalks()
+        public static void Main(string[] args)
         {
-            return new List<WalkEntity>()
-            {
-                new WalkEntity()
-                {
-                    ID = 1,
-                    Name = "Great ocean walk",
-                    Description = "This is a beautiful walk by the ocean",
-                    LengthInKm = 20.5,
-                    RegionID = 1,
-                    Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                },
-                new WalkEntity()
-                {
-                    ID = 2,
-                    Name = "Great forrest walk",
-                    Description = "This is a beautiful walk in the forrest",
-                    LengthInKm = 10.5,
-                    RegionID = 1,
-                    Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                },
-                new WalkEntity()
-                {
-                    ID = 3,
-                    Name = "Great lake walk",
-                    Description = "This is a beautiful walk by a lake",
-                    LengthInKm = 15.5,
-                    RegionID = 1,
-                    Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                },
-                new WalkEntity()
-                {
-                    ID = 4,
-                    Name = "Great mountain walk",
-                    Description = "This is a beautiful walk in the mountains",
-                    LengthInKm = 18.5,
-                    RegionID = 2,
-                    Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                },
-            };
+            List<WalkEntity> walks = GenerateWalks(50);
+            List<RegionEntity> regions = GenerateRegions(10);
+
+            // Use walks and regions as needed
         }
 
-        private List<RegionEntity> GenerateRegions()
+        private static List<WalkEntity> GenerateWalks(int numWalks)
         {
-            return new List<RegionEntity>()
+            var random = new Random();
+            var walkEntities = new List<WalkEntity>();
+
+            for (int i = 1; i <= numWalks; i++)
             {
-                new RegionEntity()
+                walkEntities.Add(new WalkEntity()
                 {
-                    ID = 1,
-                    Name = "Auckland",
-                    Description = "They make Path of Exile here...",
-                    BeautyGrade = BeautyGrade.MrPropreClean,
+                    ID = i,
+                    Name = "Walk " + i,
+                    Description = $"Description for walk {i}",
+                    LengthInKm = random.Next(2, 20), // Generate random length between 5 and 30 km
+                    RegionID = random.Next(1, 11), // Generate random region ID between 1 and 10
                     Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                },
-                new RegionEntity()
+                    Updated = DateTime.Now
+                });
+            }
+
+            return walkEntities;
+        }
+
+        private static List<RegionEntity> GenerateRegions(int numRegions)
+        {
+            var random = new Random();
+            var regionEntities = new List<RegionEntity>();
+
+            for (int i = 1; i <= numRegions; i++)
+            {
+                regionEntities.Add(new RegionEntity()
                 {
-                    ID = 2,
-                    Name = "Kosciuszko",
-                    Description = "Best day hike for active families 13km (8 miles), 4-5 hours, easy to moderate.",
-                    BeautyGrade = BeautyGrade.Normal,
+                    ID = i,
+                    Name = "Region " + i,
+                    Description = $"Description for region {i}",
+                    BeautyGrade = (BeautyGrade)random.Next(0, 4), // Randomly assign beauty grade
                     Created = DateTime.Now,
-                    Updated = DateTime.Now,
-                }
-            };
+                    Updated = DateTime.Now
+                });
+            }
+
+            return regionEntities;
         }
     }
 }
