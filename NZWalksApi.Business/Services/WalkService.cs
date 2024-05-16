@@ -31,10 +31,12 @@ namespace NZWalksApi.Business.Services
             return walk;
         }
 
-        public async Task<IEnumerable<Walk>> GetAllWalksAsync()
+        public async Task<IEnumerable<Walk>> GetAllWalksAsync(int page, int take, int enterLength)
         {
+            int skip = (page - 1) * take;
+
             List<Walk> walks = new List<Walk>();
-            IEnumerable<WalkEntity> walkEntities = await _walkRepository.GetAllWalksAsync();
+            IEnumerable<WalkEntity> walkEntities = await _walkRepository.GetAllWalksAsync(skip, take, enterLength);
 
             // Map the WalkEntities to Walk models
             walks = _mapper.Map<List<Walk>>(walkEntities);

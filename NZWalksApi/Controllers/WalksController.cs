@@ -37,9 +37,9 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         [Route("GetAllWalks")]
-        public async Task<ActionResult<WalkDTO>> GetAllWalksAsync()
+        public async Task<ActionResult<WalkDTO>> GetAllWalksAsync(int enterLength, int page = 1, int items = 20)
         {
-            IEnumerable<Walk> walks = await _walkservice.GetAllWalksAsync();
+            IEnumerable<Walk> walks = await _walkservice.GetAllWalksAsync(page, items, enterLength);
             IEnumerable<WalkDTO> walkDtos = _mapper.Map<IEnumerable<WalkDTO>>(walks);
 
             if (walks == null || walks.Count() == 0)

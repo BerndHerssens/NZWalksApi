@@ -19,9 +19,15 @@ namespace NZWalksApi.Data.Repositories
                 .SingleOrDefaultAsync(x => x.ID == id);
         }
 
-        public async Task<IEnumerable<WalkEntity>> GetAllWalksAsync()
+        public async Task<IEnumerable<WalkEntity>> GetAllWalksAsync(int skip, int take, int enterLength)
         {
-            return await _dbContext.Walks.Include(x => x.Region).ToListAsync();
+            return await _dbContext.Walks
+                .Where(x => x.LengthInKm <= enterLength)
+                .Skip(skip)
+                .Take(take)
+                .Include(x => x.Region)
+                .OrderByDescending(x => x.Name)
+                .ToListAsync();
         }
 
         public async Task AddWalkAsync(WalkEntity walkEntity)
