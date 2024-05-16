@@ -12,7 +12,7 @@ using NZWalksApi.Data;
 namespace NZWalksApi.Data.Migrations
 {
     [DbContext(typeof(NZWalksDBContext))]
-    [Migration("20240516071618_initial")]
+    [Migration("20240516082441_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -60,19 +60,19 @@ namespace NZWalksApi.Data.Migrations
                         {
                             ID = 1,
                             BeautyGrade = 4,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(684),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(2836),
                             Description = "They make Path of Exile here...",
                             Name = "Auckland",
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(735)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(2908)
                         },
                         new
                         {
                             ID = 2,
                             BeautyGrade = 2,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(740),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(2925),
                             Description = "Best day hike for active families 13km (8 miles), 4-5 hours, easy to moderate.",
                             Name = "Kosciuszko",
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(742)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(2928)
                         });
                 });
 
@@ -115,42 +115,42 @@ namespace NZWalksApi.Data.Migrations
                         new
                         {
                             ID = 1,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(821),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3131),
                             Description = "This is a beautiful walk by the ocean",
                             LengthInKm = 20.5,
                             Name = "Great ocean walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(823)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3134)
                         },
                         new
                         {
                             ID = 2,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(826),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3140),
                             Description = "This is a beautiful walk in the forrest",
                             LengthInKm = 10.5,
                             Name = "Great forrest walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(827)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3143)
                         },
                         new
                         {
                             ID = 3,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(830),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3148),
                             Description = "This is a beautiful walk by a lake",
                             LengthInKm = 15.5,
                             Name = "Great lake walk",
                             RegionID = 1,
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(831)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3150)
                         },
                         new
                         {
                             ID = 4,
-                            Created = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(833),
+                            Created = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3154),
                             Description = "This is a beautiful walk in the mountains",
                             LengthInKm = 18.5,
                             Name = "Great mountain walk",
                             RegionID = 2,
-                            Updated = new DateTime(2024, 5, 16, 9, 16, 18, 359, DateTimeKind.Local).AddTicks(834)
+                            Updated = new DateTime(2024, 5, 16, 10, 24, 40, 580, DateTimeKind.Local).AddTicks(3156)
                         });
                 });
 

@@ -43,8 +43,6 @@ namespace NZWalksApi.Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-
-
         public async Task<List<WalkEntity>> GetWalksByRegionIDAsync(int regionId)
         {
             return await _dbContext.Walks.Where(x => x.RegionID == regionId).ToListAsync();

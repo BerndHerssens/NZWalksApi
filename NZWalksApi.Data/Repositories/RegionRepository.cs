@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NZWalksApi.Data.Entities;
 
-
 namespace NZWalksApi.Data.Repositories
 {
     public class RegionRepository : IRegionRepository
@@ -13,36 +12,36 @@ namespace NZWalksApi.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public RegionEntity GetRegionByID(int id)
+        public async Task<RegionEntity> GetRegionByIDAsync(int id)
         {
-            return _dbContext.Regions.Include(x=>x.Walks).SingleOrDefault(x => x.ID == id);
+            return await _dbContext.Regions.Include(x => x.Walks).SingleOrDefaultAsync(x => x.ID == id);
         }
 
-        public IEnumerable<RegionEntity> GetAllRegions()
+        public async Task<IEnumerable<RegionEntity>> GetAllRegionsAsync()
         {
-            return _dbContext.Regions.Include(x => x.Walks);
+            return await _dbContext.Regions.Include(x => x.Walks).ToArrayAsync();
         }
 
-        public void AddRegion(RegionEntity regionEntity)
+        public async Task AddRegionAsync(RegionEntity regionEntity)
         {
-            _dbContext.Regions.Add(regionEntity);
-            _dbContext.SaveChanges(); //uitvoeren of niet opgeslagen.
+            await _dbContext.Regions.AddAsync(regionEntity);
+            await _dbContext.SaveChangesAsync(); //uitvoeren of niet opgeslagen.
         }
 
-        public void DeleteRegionByID(int id)
+        public async Task DeleteRegionByIDAsync(int id)
         {
             RegionEntity regionEntity = new RegionEntity()
             {
                 ID = id
             };
             _dbContext.Regions.Remove(regionEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void UpdateRegion(int id, RegionEntity regionEntity)
+        public async Task UpdateRegionAsync(int id, RegionEntity regionEntity)
         {
             _dbContext.Regions.Update(regionEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

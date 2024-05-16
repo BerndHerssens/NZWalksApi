@@ -18,10 +18,10 @@ namespace NZWalksApi.Business.Services
             _walkRepository = walkRepository;
         }
 
-        public Region GetRegion(int id)
+        public async Task<Region> GetRegionAsync(int id)
         {
 
-            RegionEntity regionEntity = _regionRepository.GetRegionByID(id);
+            RegionEntity regionEntity = await _regionRepository.GetRegionByIDAsync(id);
 
             if (regionEntity == null)
             {
@@ -33,29 +33,29 @@ namespace NZWalksApi.Business.Services
             return region;
         }
 
-        public IEnumerable<Region> GetAllRegions()
+        public async Task<IEnumerable<Region>> GetAllRegionsAsync()
         {
-            IEnumerable<RegionEntity> regionEntities = _regionRepository.GetAllRegions();
+            IEnumerable<RegionEntity> regionEntities = await _regionRepository.GetAllRegionsAsync();
             IEnumerable<Region> allRegions = _mapper.Map<IEnumerable<Region>>(regionEntities);
             return allRegions;
         }
 
-        public void AddRegion(Region region)
+        public async Task AddRegionAsync(Region region)
         {
             RegionEntity regionEntity = _mapper.Map<RegionEntity>(region);
             regionEntity.Created = DateTime.Now;
             regionEntity.Updated = DateTime.Now;
-            _regionRepository.AddRegion(regionEntity);
+            await _regionRepository.AddRegionAsync(regionEntity);
         }
 
-        public void DeleteRegionById(int id)
+        public async Task DeleteRegionByIdAsync(int id)
         {
-            _regionRepository.DeleteRegionByID(id);
+            await _regionRepository.DeleteRegionByIDAsync(id);
         }
 
         public async Task<IEnumerable<Region>> GetAllRegionsWithWalksAsync()
         {
-            IEnumerable<RegionEntity> regionEntities = _regionRepository.GetAllRegions();
+            IEnumerable<RegionEntity> regionEntities = await _regionRepository.GetAllRegionsAsync();
             IEnumerable<Region> allRegions = _mapper.Map<IEnumerable<Region>>(regionEntities);
 
             foreach (Region region in allRegions)
@@ -67,9 +67,9 @@ namespace NZWalksApi.Business.Services
             return allRegions;
         }
 
-        public void UpdateRegion(int id, Region region)
+        public async Task UpdateRegionAsync(int id, Region region)
         {
-            RegionEntity objectDB = _regionRepository.GetRegionByID(id);
+            RegionEntity objectDB = await _regionRepository.GetRegionByIDAsync(id);
 
             RegionEntity updatedObject = _mapper.Map<RegionEntity>(region);
 
@@ -78,7 +78,7 @@ namespace NZWalksApi.Business.Services
             objectDB.Walks = updatedObject.Walks;
             objectDB.Description = updatedObject.Description;
             objectDB.Updated = DateTime.Now;
-            _regionRepository.UpdateRegion(id, objectDB);
+            await _regionRepository.UpdateRegionAsync(id, objectDB);
         }
     }
 }

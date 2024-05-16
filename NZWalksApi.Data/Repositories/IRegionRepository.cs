@@ -4,10 +4,10 @@ namespace NZWalksApi.Data.Repositories
 {
     public interface IRegionRepository
     {
-        void AddRegion(RegionEntity regionEntity);
-        void DeleteRegionByID(int id);
-        IEnumerable<RegionEntity> GetAllRegions();
-        RegionEntity GetRegionByID(int id);
-        void UpdateRegion(int id, RegionEntity regionEntity);
+        Task AddRegionAsync(RegionEntity regionEntity);
+        Task DeleteRegionByIDAsync(int id);
+        Task<IEnumerable<RegionEntity>> GetAllRegionsAsync();
+        Task<RegionEntity> GetRegionByIDAsync(int id);
+        Task UpdateRegionAsync(int id, RegionEntity regionEntity);
     }
 }

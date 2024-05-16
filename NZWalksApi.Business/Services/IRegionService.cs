@@ -4,11 +4,11 @@ namespace NZWalksApi.Business.Services
 {
     public interface IRegionService
     {
-        void AddRegion(Region region);
-        void DeleteRegionById(int id);
-        IEnumerable<Region> GetAllRegions();
+        Task AddRegionAsync(Region region);
+        Task DeleteRegionByIdAsync(int id);
+        Task<IEnumerable<Region>> GetAllRegionsAsync();
         Task<IEnumerable<Region>> GetAllRegionsWithWalksAsync();
-        Region GetRegion(int id);
-        void UpdateRegion(int id, Region region);
+        Task<Region> GetRegionAsync(int id);
+        Task UpdateRegionAsync(int id, Region region);
     }
 }

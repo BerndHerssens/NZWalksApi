@@ -20,9 +20,9 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<RegionDTO> GetSpecificRegion(int id)
+        public async Task<ActionResult<RegionDTO>> GetSpecificRegionAsync(int id)
         {
-            Region region = _regionService.GetRegion(id);
+            Region region = await _regionService.GetRegionAsync(id);
             RegionDTO regionDTO = _mapper.Map<RegionDTO>(region);
 
             if (region == null)
@@ -34,6 +34,7 @@ namespace NZWalksApi.Controllers
                 return Ok(regionDTO);
             }
         }
+
         [HttpGet]
         [Route("GetAllRegions")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> GetAllRegionsAsync(bool incloudWalks)
@@ -47,9 +48,9 @@ namespace NZWalksApi.Controllers
             }
             else
             {
-                regions = _regionService.GetAllRegions();
+                 regions = await _regionService.GetAllRegionsAsync();
             }
-            regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
+             regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
 
             if (regions == null || regions.Count() == 0)
             {
@@ -62,24 +63,25 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddRegion(AddRegionDTO addRagion)
+        public async Task<ActionResult> AddRegionAsync (AddRegionDTO addRegion)
         {
-            Region region = _mapper.Map<Region>(addRagion);
-            _regionService.AddRegion(region);
+            Region region = _mapper.Map<Region>(addRegion);
+            await _regionService.AddRegionAsync(region);
             return Created();
         }
+
         [HttpDelete]
-        public ActionResult DeleteRegion(int id)
+        public async Task<ActionResult> DeleteRegionAsync(int id)
         {
-            _regionService.DeleteRegionById(id);
+            await _regionService.DeleteRegionByIdAsync(id);
             return Created();
         }
 
         [HttpPut]
-        public ActionResult UpdateRegion(int id, UpdateRegionDTO updateRegion)
+        public async Task<ActionResult> UpdateRegionAsync(int id, UpdateRegionDTO updateRegion)
         {
             Region region = _mapper.Map<Region>(updateRegion);
-            _regionService.UpdateRegion(id, region);
+            await _regionService.UpdateRegionAsync(id, region);
             return Created();
         }
 
