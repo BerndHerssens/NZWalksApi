@@ -6,9 +6,9 @@ namespace NZWalksApi.Data.Repositories
     {
         Task AddWalkAsync(WalkEntity walkEntity);
         Task DeleteWalkByIDAsync(int id);
-        IEnumerable<WalkEntity> GetAllWalks();
-        WalkEntity GetWalkByID(int id);
-        List<WalkEntity> GetWalksByRegionID(int regionId);
+        Task<IEnumerable<WalkEntity>> GetAllWalksAsync();
+        Task<WalkEntity> GetWalkByIDAsync(int id);
+        Task<List<WalkEntity>> GetWalksByRegionIDAsync(int regionId);
         Task UpdateWalkAsync(int id, WalkEntity walkEntity);
     }
 }

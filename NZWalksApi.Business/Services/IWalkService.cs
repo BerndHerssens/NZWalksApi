@@ -6,8 +6,8 @@ namespace NZWalksApi.Business.Services
     {
         Task AddWalkAsync(Walk walk);
         Task DeleteWalkByIdAsync(int id);
-        IEnumerable<Walk> GetAllWalks();
-        Walk GetWalk(int id);
+        Task<IEnumerable<Walk>> GetAllWalksAsync();
+        Task<Walk> GetWalkAsync(int id);
         Task UpdateWalkAsync(int id, Walk walk);
     }
 }

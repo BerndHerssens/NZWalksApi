@@ -16,10 +16,10 @@ namespace NZWalksApi.Business.Services
             _mapper = mapper;
         }
 
-        public Walk GetWalk(int id)
+        public async Task<Walk> GetWalkAsync(int id)
         {
             Walk walk = new Walk();
-            WalkEntity walkEntity = _walkRepository.GetWalkByID(id);
+            WalkEntity walkEntity = await _walkRepository.GetWalkByIDAsync(id);
 
             if (walkEntity == null)
             {
@@ -31,10 +31,10 @@ namespace NZWalksApi.Business.Services
             return walk;
         }
 
-        public IEnumerable<Walk> GetAllWalks()
+        public async Task<IEnumerable<Walk>> GetAllWalksAsync()
         {
             List<Walk> walks = new List<Walk>();
-            IEnumerable<WalkEntity> walkEntities = _walkRepository.GetAllWalks();
+            IEnumerable<WalkEntity> walkEntities = await _walkRepository.GetAllWalksAsync();
 
             // Map the WalkEntities to Walk models
             walks = _mapper.Map<List<Walk>>(walkEntities);
@@ -56,7 +56,7 @@ namespace NZWalksApi.Business.Services
 
         public async Task UpdateWalkAsync(int id, Walk walk)
         {
-            WalkEntity existingWalk = _walkRepository.GetWalkByID(id);
+            WalkEntity existingWalk = await _walkRepository.GetWalkByIDAsync(id);
             WalkEntity updatedWalkEntity = _mapper.Map<WalkEntity>(walk);
 
             existingWalk.Description = updatedWalkEntity.Description;

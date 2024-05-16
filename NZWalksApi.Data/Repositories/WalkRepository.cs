@@ -12,16 +12,16 @@ namespace NZWalksApi.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public WalkEntity GetWalkByID(int id)
+        public async Task<WalkEntity> GetWalkByIDAsync(int id)
         {
-            return _dbContext.Walks
+            return await _dbContext.Walks
                 .Include(x => x.Region)
-                .SingleOrDefault(x => x.ID == id);
+                .SingleOrDefaultAsync(x => x.ID == id);
         }
 
-        public IEnumerable<WalkEntity> GetAllWalks()
+        public async Task<IEnumerable<WalkEntity>> GetAllWalksAsync()
         {
-            return _dbContext.Walks.Include(x => x.Region);
+            return await _dbContext.Walks.Include(x => x.Region).ToListAsync();
         }
 
         public async Task AddWalkAsync(WalkEntity walkEntity)
@@ -45,9 +45,9 @@ namespace NZWalksApi.Data.Repositories
 
 
 
-        public List<WalkEntity> GetWalksByRegionID(int regionId)
+        public async Task<List<WalkEntity>> GetWalksByRegionIDAsync(int regionId)
         {
-            return _dbContext.Walks.Where(x => x.RegionID == regionId).ToList();
+            return await _dbContext.Walks.Where(x => x.RegionID == regionId).ToListAsync();
         }
     }
 }

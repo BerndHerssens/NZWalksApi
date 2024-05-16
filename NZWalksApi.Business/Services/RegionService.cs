@@ -53,14 +53,14 @@ namespace NZWalksApi.Business.Services
             _regionRepository.DeleteRegionByID(id);
         }
 
-        public IEnumerable<Region> GetAllRegionsWithWalks()
+        public async Task<IEnumerable<Region>> GetAllRegionsWithWalksAsync()
         {
             IEnumerable<RegionEntity> regionEntities = _regionRepository.GetAllRegions();
             IEnumerable<Region> allRegions = _mapper.Map<IEnumerable<Region>>(regionEntities);
-           
-            foreach(Region region in allRegions)
+
+            foreach (Region region in allRegions)
             {
-                List<WalkEntity> walkEntities = _walkRepository.GetWalksByRegionID(region.ID);
+                List<WalkEntity> walkEntities = await _walkRepository.GetWalksByRegionIDAsync(region.ID);
                 List<Walk> walks = _mapper.Map<List<Walk>>(walkEntities);
                 region.WalksInRegion = walks;
             }
@@ -72,13 +72,13 @@ namespace NZWalksApi.Business.Services
             RegionEntity objectDB = _regionRepository.GetRegionByID(id);
 
             RegionEntity updatedObject = _mapper.Map<RegionEntity>(region);
-            
+
             objectDB.Name = updatedObject.Name;
             objectDB.BeautyGrade = updatedObject.BeautyGrade;
             objectDB.Walks = updatedObject.Walks;
             objectDB.Description = updatedObject.Description;
             objectDB.Updated = DateTime.Now;
-            _regionRepository.UpdateRegion(id,objectDB);
+            _regionRepository.UpdateRegion(id, objectDB);
         }
     }
 }

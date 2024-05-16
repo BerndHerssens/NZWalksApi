@@ -19,9 +19,9 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         //[Route("GetWalk/{id:int}")]
-        public ActionResult<WalkDTO> GetSpecificWalk(int id)
+        public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
-            Walk walk = _walkservice.GetWalk(id);
+            Walk walk = await _walkservice.GetWalkAsync(id);
             WalkDTO dto = _mapper.Map<WalkDTO>(walk);
 
             if (walk == null)
@@ -35,12 +35,12 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         [Route("GetAllWalks")]
-        public ActionResult<WalkDTO> GetAllWalks()
+        public async Task<ActionResult<WalkDTO>> GetAllWalksAsync()
         {
-            IEnumerable<Walk> walks = _walkservice.GetAllWalks();
-            IEnumerable< WalkDTO > walkDtos = _mapper.Map<IEnumerable<WalkDTO>>(walks);
+            IEnumerable<Walk> walks = await _walkservice.GetAllWalksAsync();
+            IEnumerable<WalkDTO> walkDtos = _mapper.Map<IEnumerable<WalkDTO>>(walks);
 
-            if (walks == null || walks.Count() == 0 )
+            if (walks == null || walks.Count() == 0)
             {
                 return NotFound();
             }

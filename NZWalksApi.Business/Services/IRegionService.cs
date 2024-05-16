@@ -7,7 +7,7 @@ namespace NZWalksApi.Business.Services
         void AddRegion(Region region);
         void DeleteRegionById(int id);
         IEnumerable<Region> GetAllRegions();
-        IEnumerable<Region> GetAllRegionsWithWalks();
+        Task<IEnumerable<Region>> GetAllRegionsWithWalksAsync();
         Region GetRegion(int id);
         void UpdateRegion(int id, Region region);
     }

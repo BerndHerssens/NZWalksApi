@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
@@ -37,20 +36,20 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         [Route("GetAllRegions")]
-        public ActionResult<IEnumerable<RegionDTO>>GetAllRegions(bool incloudWalks)
+        public async Task<ActionResult<IEnumerable<RegionDTO>>> GetAllRegionsAsync(bool incloudWalks)
         {
             IEnumerable<Region> regions;
             IEnumerable<RegionDTO> regionsDTO;
 
             if (incloudWalks)
             {
-                regions = _regionService.GetAllRegionsWithWalks();
+                regions = await _regionService.GetAllRegionsWithWalksAsync();
             }
             else
             {
-                 regions = _regionService.GetAllRegions();
+                regions = _regionService.GetAllRegions();
             }
-             regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
+            regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
 
             if (regions == null || regions.Count() == 0)
             {
@@ -63,7 +62,7 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddRegion (AddRegionDTO addRagion)
+        public ActionResult AddRegion(AddRegionDTO addRagion)
         {
             Region region = _mapper.Map<Region>(addRagion);
             _regionService.AddRegion(region);
