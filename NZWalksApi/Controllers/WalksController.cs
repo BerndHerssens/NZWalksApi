@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace NZWalksApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WalksController : ControllerBase
     {
         private IWalkService _walkservice;
@@ -20,6 +22,7 @@ namespace NZWalksApi.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [AllowAnonymous]
         //[Route("GetWalk/{id:int}")]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
@@ -36,6 +39,7 @@ namespace NZWalksApi.Controllers
             }
         }
         [HttpGet]
+        [AllowAnonymous]
         [Route("GetAllWalks")]
         public async Task<ActionResult<WalkDTO>> GetAllWalksAsync(int enterLength, int page = 1, int items = 20)
         {
