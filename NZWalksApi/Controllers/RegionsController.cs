@@ -65,9 +65,16 @@ namespace NZWalksApi.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRegionAsync (AddRegionDTO addRegion)
         {
-            Region region = _mapper.Map<Region>(addRegion);
-            await _regionService.AddRegionAsync(region);
-            return Created();
+            if (ModelState.IsValid)
+            {
+                Region region = _mapper.Map<Region>(addRegion);
+                await _regionService.AddRegionAsync(region);
+                return Created();
+            } 
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpDelete]
@@ -80,9 +87,16 @@ namespace NZWalksApi.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateRegionAsync(int id, UpdateRegionDTO updateRegion)
         {
-            Region region = _mapper.Map<Region>(updateRegion);
-            await _regionService.UpdateRegionAsync(id, region);
-            return Created();
+            if (ModelState.IsValid)
+            {
+                Region region = _mapper.Map<Region>(updateRegion);
+                await _regionService.UpdateRegionAsync(id, region);
+                return Created();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
     }

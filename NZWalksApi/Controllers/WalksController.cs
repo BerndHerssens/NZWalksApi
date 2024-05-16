@@ -52,9 +52,15 @@ namespace NZWalksApi.Controllers
         [HttpPost]
         public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
-            Walk walk = _mapper.Map<Walk>(addWalk);
-            await _walkservice.AddWalkAsync(walk);
-            return Created();
+            if (ModelState.IsValid)
+            {
+                Walk walk = _mapper.Map<Walk>(addWalk);
+                await _walkservice.AddWalkAsync(walk);
+                return Created();
+            } else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpDelete]
@@ -67,9 +73,16 @@ namespace NZWalksApi.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateWalkAsync(int id, UpdateWalkDTO updateWalk)
         {
-            Walk walk = _mapper.Map<Walk>(updateWalk);
-            await _walkservice.UpdateWalkAsync(id, walk);
-            return Created();
+            if (ModelState.IsValid)
+            {
+                Walk walk = _mapper.Map<Walk>(updateWalk);
+                await _walkservice.UpdateWalkAsync(id, walk);
+                return Created();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
     }
 }
