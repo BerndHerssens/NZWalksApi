@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,21 +10,26 @@ namespace NZWalksApi.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
+        // TODO: Do not store this here
         private const string secret = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
 
-
-        private string CreateJWTToken()
+        private string CreateJWTToken(string[] roles)
         {
-            var tokenHandler  = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(secret);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.UTF8.GetBytes(secret);
 
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, "foo@bar.com"),
                 new(JwtRegisteredClaimNames.Email, "foo@bar.com"),
+                new(JwtRegisteredClaimNames.Name, "Jos de magazijnier"),
                 new("userId", "-1")
             };
+
+            foreach (string role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -37,7 +39,7 @@ namespace NZWalksApi.Controllers
                 Audience = "http://localhost:5162/",
                 SigningCredentials = new SigningCredentials
                 (
-                    new SymmetricSecurityKey(key), 
+                    new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256
 
                 )
@@ -47,13 +49,13 @@ namespace NZWalksApi.Controllers
             string jwt = tokenHandler.WriteToken(token);
 
             return jwt;
-           
+
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string[] roles)
         {
-            return Ok(CreateJWTToken());
+            return Ok(CreateJWTToken(roles));
         }
     }
 }

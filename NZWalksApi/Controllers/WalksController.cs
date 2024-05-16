@@ -23,7 +23,6 @@ namespace NZWalksApi.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        //[Route("GetWalk/{id:int}")]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
             Walk walk = await _walkservice.GetWalkAsync(id);
@@ -55,6 +54,7 @@ namespace NZWalksApi.Controllers
                 return Ok(walkDtos);
             }
         }
+
         [HttpPost]
         public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
@@ -72,19 +72,20 @@ namespace NZWalksApi.Controllers
                 }
             }
 
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 return BadRequest("Region must exist!");
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500);
             }
 
         }
 
+
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteWalkAsync(int id)
         {
             await _walkservice.DeleteWalkByIdAsync(id);
