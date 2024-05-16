@@ -41,20 +41,20 @@ namespace NZWalksApi.Business.Services
             return walks;
         }
 
-        public void AddWalk(Walk walk)
+        public async Task AddWalkAsync(Walk walk)
         {
             WalkEntity walkEntity = _mapper.Map<WalkEntity>(walk);
             walkEntity.Created = DateTime.Now;
             walkEntity.Updated = DateTime.Now;
-            _walkRepository.AddWalk(walkEntity);
+            await _walkRepository.AddWalkAsync(walkEntity);
         }
 
-        public void DeleteWalkById(int id)
+        public async Task DeleteWalkByIdAsync(int id)
         {
-            _walkRepository.DeleteWalkByID(id);
+            await _walkRepository.DeleteWalkByIDAsync(id);
         }
 
-        public void UpdateWalk(int id, Walk walk)
+        public async Task UpdateWalkAsync(int id, Walk walk)
         {
             WalkEntity existingWalk = _walkRepository.GetWalkByID(id);
             WalkEntity updatedWalkEntity = _mapper.Map<WalkEntity>(walk);
@@ -66,7 +66,7 @@ namespace NZWalksApi.Business.Services
             existingWalk.Name = updatedWalkEntity.Name;
 
             existingWalk.Updated = DateTime.Now;
-            _walkRepository.UpdateWalk(id, existingWalk);
+            await _walkRepository.UpdateWalkAsync(id, existingWalk);
 
         }
     }

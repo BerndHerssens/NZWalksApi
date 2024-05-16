@@ -50,25 +50,25 @@ namespace NZWalksApi.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddWalk(AddWalkDTO addWalk)
+        public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
             Walk walk = _mapper.Map<Walk>(addWalk);
-            _walkservice.AddWalk(walk);
+            await _walkservice.AddWalkAsync(walk);
             return Created();
         }
 
         [HttpDelete]
-        public ActionResult DeleteWalk(int id)
+        public async Task<ActionResult> DeleteWalkAsync(int id)
         {
-            _walkservice.DeleteWalkById(id);
+            await _walkservice.DeleteWalkByIdAsync(id);
             return Created();
         }
 
         [HttpPut]
-        public ActionResult UpdateWalk(int id, UpdateWalkDTO updateWalk)
+        public async Task<ActionResult> UpdateWalkAsync(int id, UpdateWalkDTO updateWalk)
         {
             Walk walk = _mapper.Map<Walk>(updateWalk);
-            _walkservice.UpdateWalk(id, walk);
+            await _walkservice.UpdateWalkAsync(id, walk);
             return Created();
         }
     }

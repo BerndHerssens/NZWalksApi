@@ -4,11 +4,11 @@ namespace NZWalksApi.Data.Repositories
 {
     public interface IWalkRepository
     {
-        void AddWalk(WalkEntity walkEntity);
-        void DeleteWalkByID(int id);
+        Task AddWalkAsync(WalkEntity walkEntity);
+        Task DeleteWalkByIDAsync(int id);
         IEnumerable<WalkEntity> GetAllWalks();
         WalkEntity GetWalkByID(int id);
         List<WalkEntity> GetWalksByRegionID(int regionId);
-        void UpdateWalk(int id, WalkEntity walkEntity);
+        Task UpdateWalkAsync(int id, WalkEntity walkEntity);
     }
 }

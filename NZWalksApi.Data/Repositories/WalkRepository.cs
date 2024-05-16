@@ -24,26 +24,26 @@ namespace NZWalksApi.Data.Repositories
             return _dbContext.Walks.Include(x => x.Region);
         }
 
-        public void AddWalk(WalkEntity walkEntity)
+        public async Task AddWalkAsync(WalkEntity walkEntity)
         {
-            _dbContext.Walks.Add(walkEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.Walks.AddAsync(walkEntity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void UpdateWalk(int id, WalkEntity walkEntity)
+        public async Task UpdateWalkAsync(int id, WalkEntity walkEntity)
         {
             _dbContext.Walks.Update(walkEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void DeleteWalkByID(int id)
+        public async Task DeleteWalkByIDAsync(int id)
         {
             WalkEntity walkEntity = new WalkEntity { ID = id };
             _dbContext.Walks.Remove(walkEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-    
+
 
         public List<WalkEntity> GetWalksByRegionID(int regionId)
         {

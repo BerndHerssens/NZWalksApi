@@ -4,10 +4,10 @@ namespace NZWalksApi.Business.Services
 {
     public interface IWalkService
     {
-        void AddWalk(Walk walk);
-        void DeleteWalkById(int id);
+        Task AddWalkAsync(Walk walk);
+        Task DeleteWalkByIdAsync(int id);
         IEnumerable<Walk> GetAllWalks();
         Walk GetWalk(int id);
-        void UpdateWalk(int id, Walk walk);
+        Task UpdateWalkAsync(int id, Walk walk);
     }
 }
