@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
 using NZWalksApi.DTO;
@@ -52,15 +54,30 @@ namespace NZWalksApi.Controllers
         [HttpPost]
         public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Walk walk = _mapper.Map<Walk>(addWalk);
-                await _walkservice.AddWalkAsync(walk);
-                return Created();
-            } else
-            {
-                return BadRequest(ModelState);
+                if (ModelState.IsValid)
+                {
+                    Walk walk = _mapper.Map<Walk>(addWalk);
+                    await _walkservice.AddWalkAsync(walk);
+                    return Created();
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
+
+            catch(DbUpdateException ex)
+            {
+                return BadRequest("Region must exist!");
+                
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500);
+            }
+
         }
 
         [HttpDelete]
