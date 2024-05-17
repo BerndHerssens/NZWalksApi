@@ -13,40 +13,44 @@ namespace NZWalksApi.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private string CreateJWTToken(IdentityUser identityUser, List<string> roles)
+        //Do not do this cool thing!
+        private string key = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
+        private string CreateJWTToken(string[] roles)
         {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            Byte[] keyBytes = Encoding.UTF8.GetBytes(key);
 
-            string secret = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn"; 
-            string issuer = "http://localhost:5162/";
-            string audience = "http://localhost:5162/";
-            var claims = new List<Claim>();
-            var Jos = new IdentityUser();
-            Jos.Email = "foebar@gmail.com";
-            roles = new List<string>();
-            roles.Add("admin");
-            claims.Add(new Claim(ClaimTypes.Email, Jos.Email)); //hier kijken we welke claims deze identityUser heeft
-
-            foreach (var role in roles) //hier geven we hem dan de rollen aan de hand van zijn claims
+            //Hier voegen we informatie over de gebruiker (claims) toe
+            //Vanaf hier tot en met lijn 37 is te configureren
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, "Jos@magazijn.com"));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Name, "Jos De Magazijnier"));
+            claims.Add(new Claim("Hobby", "Dozen verslepen"));
+            
+            foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor();
+            tokenDescriptor.Subject = new ClaimsIdentity(claims);
+            tokenDescriptor.Expires = DateTime.UtcNow.AddHours(1);
+            tokenDescriptor.Audience = "http://localhost:5162/";
+            tokenDescriptor.Issuer = "http://localhost:5162/";
+            tokenDescriptor.SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(keyBytes),
+                SecurityAlgorithms.HmacSha256
+                );
 
-            var token = new JwtSecurityToken(
-                issuer,
-                audience,
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            
+            return tokenHandler.WriteToken(token);
         }
+
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string[] roles)
         {
-            return Ok(CreateJWTToken(null,null));
+            return Ok(CreateJWTToken(roles));
         }
     }
 }

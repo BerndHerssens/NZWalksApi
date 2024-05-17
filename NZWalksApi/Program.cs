@@ -51,29 +51,26 @@ namespace NZWalksApi
 
         private static void InjectJWTAuthorisation(WebApplicationBuilder builder)
         {
+            var config = builder.Configuration;
             // Add JWT Bearer Authentication
             builder.Services.AddAuthentication(x =>
             {
-
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-
             }).AddJwtBearer(x =>
             {
-
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = builder.Configuration["JWTSettings: Issuer"],
-                    ValidAudience = builder.Configuration["JWTSettings: Audience"],
+                    ValidIssuer = config["JwtSettings: Issuer"],
+                    ValidAudience = config["JwtSettings: Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings: Key"]!)),
+                        Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
                 };
-
             });
         }
 
