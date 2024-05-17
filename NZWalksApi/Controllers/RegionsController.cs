@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
@@ -8,6 +9,7 @@ namespace NZWalksApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private IRegionService _regionService;
@@ -19,6 +21,7 @@ namespace NZWalksApi.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<RegionDTO>> GetSpecificRegionAsync(int id)
         {
@@ -35,6 +38,7 @@ namespace NZWalksApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetAllRegions")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> GetAllRegionsAsync(bool incloudWalks)
@@ -48,9 +52,9 @@ namespace NZWalksApi.Controllers
             }
             else
             {
-                 regions = await _regionService.GetAllRegionsAsync();
+                regions = await _regionService.GetAllRegionsAsync();
             }
-             regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
+            regionsDTO = _mapper.Map<IEnumerable<RegionDTO>>(regions);
 
             if (regions == null || regions.Count() == 0)
             {
@@ -62,21 +66,23 @@ namespace NZWalksApi.Controllers
             }
         }
 
+
         [HttpPost]
-        public async Task<ActionResult> AddRegionAsync (AddRegionDTO addRegion)
+        public async Task<ActionResult> AddRegionAsync(AddRegionDTO addRegion)
         {
             if (ModelState.IsValid)
             {
                 Region region = _mapper.Map<Region>(addRegion);
                 await _regionService.AddRegionAsync(region);
                 return Created();
-            } 
+            }
             else
             {
                 return BadRequest(ModelState);
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<ActionResult> DeleteRegionAsync(int id)
         {
