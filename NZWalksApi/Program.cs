@@ -27,6 +27,17 @@ namespace NZWalksApi
             InjectAutoMapper(builder);
             InjectDatabase(builder);
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+            });
+
             //Use this for JWT
             builder.Services.AddAuthorization();
 
@@ -43,6 +54,7 @@ namespace NZWalksApi
 
             app.UseAuthorization();
 
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
 

@@ -38,7 +38,6 @@ namespace NZWalksApi.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("GetAllRegions")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> GetAllRegionsAsync(bool incloudWalks)
