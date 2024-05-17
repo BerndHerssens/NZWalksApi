@@ -4,13 +4,12 @@ import { RegionService } from '../services/region.service';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
-  styleUrl: './region.component.css'
+  styleUrl: './region.component.css',
 })
-export class RegionComponent implements OnInit{
-  regions : any[] = []
+export class RegionComponent implements OnInit {
+  regions: any[] = [];
 
-
-  constructor(private regionService : RegionService){}
+  constructor(private regionService: RegionService) {}
   ngOnInit(): void {
     this.regionService.getRegions().subscribe(
       (data) => {
@@ -21,5 +20,17 @@ export class RegionComponent implements OnInit{
       }
     );
   }
-}
 
+  AddRegion() {
+    this.regionService.addRegion().subscribe(
+      (response) => {
+        console.log('Region added successfully:', response);
+        // Handle the response as needed (e.g., update UI, show success message)
+      },
+      (error) => {
+        console.error('Error adding region:', error);
+        // Handle the error (e.g., show error message)
+      }
+    );
+  }
+}
