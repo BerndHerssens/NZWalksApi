@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NZWalksApi.Business.Models;
 using NZWalksApi.Business.Services;
@@ -9,9 +8,10 @@ using NZWalksApi.DTO;
 
 namespace NZWalksApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class WalksController : ControllerBase
     {
         private IWalkService _walkservice;
@@ -21,8 +21,9 @@ namespace NZWalksApi.Controllers
             _walkservice = walkService;
             _mapper = mapper;
         }
+
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Reader, Admin, SuperAdmin")]
         //[Route("GetWalk/{id:int}")]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
@@ -56,6 +57,7 @@ namespace NZWalksApi.Controllers
             }
         }
         [HttpPost]
+
         public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
             try
@@ -72,12 +74,12 @@ namespace NZWalksApi.Controllers
                 }
             }
 
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 return BadRequest("Region must exist!");
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500);
             }
@@ -85,6 +87,7 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> DeleteWalkAsync(int id)
         {
             await _walkservice.DeleteWalkByIdAsync(id);
@@ -92,6 +95,8 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin,SuperAdmin")]
+
         public async Task<ActionResult> UpdateWalkAsync(int id, UpdateWalkDTO updateWalk)
         {
             if (ModelState.IsValid)
