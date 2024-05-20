@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,46 +13,38 @@ namespace NZWalksApi.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        // TODO: Do not store this here
-        private const string secret = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
-
+        //Do not do this cool thing!
+        private string key = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
         private string CreateJWTToken(string[] roles)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.UTF8.GetBytes(secret);
+            Byte[] keyBytes = Encoding.UTF8.GetBytes(key);
 
-            var claims = new List<Claim>
-            {
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Email, "foo@bar.com"),
-                new(JwtRegisteredClaimNames.Name, "Jos de magazijnier"),
-                new("userId", "-1")
-            };
-
+            //Hier voegen we informatie over de gebruiker (claims) toe
+            //Vanaf hier tot en met lijn 37 is te configureren
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, "Jos@magazijn.com"));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Name, "Jos De Magazijnier"));
+            claims.Add(new Claim("Hobby", "Dozen verslepen"));
+            
             foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(1),
-                Issuer = "http://localhost:5162/",
-                Audience = "http://localhost:5162/",
-                SigningCredentials = new SigningCredentials
-                (
-                    new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256
-
-                )
-            };
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor();
+            tokenDescriptor.Subject = new ClaimsIdentity(claims);
+            tokenDescriptor.Expires = DateTime.UtcNow.AddHours(1);
+            tokenDescriptor.Audience = "http://localhost:5162/";
+            tokenDescriptor.Issuer = "http://localhost:5162/";
+            tokenDescriptor.SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(keyBytes),
+                SecurityAlgorithms.HmacSha256
+                );
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            string jwt = tokenHandler.WriteToken(token);
-
-            return jwt;
-
+            
+            return tokenHandler.WriteToken(token);
         }
 
         [HttpGet]

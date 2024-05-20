@@ -13,8 +13,7 @@ namespace NZWalksApi
     {
         public static void Main(string[] args)
         {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            ConfigurationManager config = builder.Configuration;
+            var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
@@ -23,7 +22,49 @@ namespace NZWalksApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Add JWT Authentication
+            InjectJWTAuthorisation(builder);
+            InjectServices(builder);
+            InjectAutoMapper(builder);
+            InjectDatabase(builder);
+
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+            });
+
+            //Use this for JWT
+            builder.Services.AddAuthorization();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            //Use this for JWT
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseCors(MyAllowSpecificOrigins);
+
+            app.MapControllers();
+
+            app.Run();
+        }
+
+        private static void InjectJWTAuthorisation(WebApplicationBuilder builder)
+        {
+            var config = builder.Configuration;
+            // Add JWT Bearer Authentication
             builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,41 +84,28 @@ namespace NZWalksApi
                     ValidateIssuerSigningKey = true
                 };
             });
+        }
 
-            // Add JWT Authorization
-            builder.Services.AddAuthorization();
+        private static void InjectAutoMapper(WebApplicationBuilder builder)
+        {
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
 
+        private static void InjectDatabase(WebApplicationBuilder builder)
+        {
+            //Do not add connectionstring here in production!! This is sensitive information!!
+            string connectionString = builder.Configuration.GetConnectionString("NZConnectionString");
+            builder.Services.AddDbContext<NZWalksDBContext>(
+                options => options.UseSqlServer(connectionString));
+        }
+
+        private static void InjectServices(WebApplicationBuilder builder)
+        {
             //Add dependencies here:
             builder.Services.AddScoped<IWalkRepository, WalkRepository>();
             builder.Services.AddScoped<IWalkService, WalkService>();
             builder.Services.AddScoped<IRegionRepository, RegionRepository>();
             builder.Services.AddScoped<IRegionService, RegionService>();
-            
-            //Automapper gets installed here
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            //Add dependency to database here:
-            //Do not add connectionstring here in production!! This is sensitive information!!
-            string connectionString = config.GetConnectionString("NZConnectionString");
-            builder.Services.AddDbContext<NZWalksDBContext>(
-                options => options.UseSqlServer(connectionString));
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            // Add these for JWT as well
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }

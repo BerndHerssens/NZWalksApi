@@ -1,0 +1,6 @@
+<ul>
+    <li *ngFor="let region of regions">
+        {{region.name}}: {{region.beschrijving}}
+    </li>
+</ul>
+<button (click)="AddRegion()">Add Region</button>
