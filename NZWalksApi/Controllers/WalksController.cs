@@ -22,7 +22,7 @@ namespace NZWalksApi.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Reader")]
         //[Route("GetWalk/{id:int}")]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
@@ -85,6 +85,7 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "superAdmin")]
         public async Task<ActionResult> DeleteWalkAsync(int id)
         {
             await _walkservice.DeleteWalkByIdAsync(id);
@@ -92,6 +93,7 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateWalkAsync(int id, UpdateWalkDTO updateWalk)
         {
             if (ModelState.IsValid)
