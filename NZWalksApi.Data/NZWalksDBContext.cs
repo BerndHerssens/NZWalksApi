@@ -3,19 +3,19 @@ using NZWalksApi.Data.Entities;
 
 namespace NZWalksApi.Data
 {
+    //Deze klasse communiceert met de database
     public class NZWalksDBContext : DbContext
     {
-        //Deze klasse communiceert met de database!!
-
+        // Entities to DB tables
         public DbSet<WalkEntity> Walks { get; set; }
+
         public DbSet<RegionEntity> Regions { get; set; }
 
         public NZWalksDBContext(DbContextOptions<NZWalksDBContext> dbContextOptions)
-            : base(dbContextOptions)
-        {
+            : base(dbContextOptions) { }
 
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder) //seeding: dummy data 
+        // Seeding
+        protected override void OnModelCreating(ModelBuilder modelBuilder) //seeding: dummy data
         {
             base.OnModelCreating(modelBuilder);
 
@@ -44,9 +44,9 @@ namespace NZWalksApi.Data
                 walkEntities.Add(new WalkEntity()
                 {
                     ID = i,
-                    Name = "Walk " + i,
+                    Name = $"Walk {i}",
                     Description = $"Description for walk {i}",
-                    LengthInKm = random.Next(2, 20), // Generate random length between 5 and 30 km
+                    LengthInKm = random.Next(2, 21), // Generate random length between 2 and 20 km
                     RegionID = random.Next(1, 11), // Generate random region ID between 1 and 10
                     Created = DateTime.Now,
                     Updated = DateTime.Now
@@ -68,7 +68,7 @@ namespace NZWalksApi.Data
                     ID = i,
                     Name = "Region " + i,
                     Description = $"Description for region {i}",
-                    BeautyGrade = (BeautyGrade)random.Next(0, 4), // Randomly assign beauty grade
+                    BeautyGrade = random.Next(0, 6), // Randomly assign beauty grade
                     Created = DateTime.Now,
                     Updated = DateTime.Now
                 });

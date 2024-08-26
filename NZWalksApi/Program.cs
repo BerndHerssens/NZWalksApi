@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +48,7 @@ namespace NZWalksApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
             //Use this for JWT
             app.UseAuthentication();
 

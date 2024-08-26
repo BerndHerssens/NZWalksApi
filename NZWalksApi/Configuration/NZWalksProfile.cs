@@ -10,7 +10,7 @@ namespace NZWalksApi.Configuration
         public NZWalksProfile()
         {
             // Allowed mappings: Entiteit <-> Model; Model <-> DTO; niet Model naar Model of DTO naar DTO
-            
+
             CreateMap<AddWalkDTO, Walk>();
             CreateMap<AddRegionDTO, Region>();
             CreateMap<UpdateWalkDTO, Walk>();
@@ -32,7 +32,6 @@ namespace NZWalksApi.Configuration
 
             CreateMap<Region, RegionDTO>()
                 .ForMember(x => x.ListWalksInRegion, y => y.MapFrom(z => z.WalksInRegion));
-
         }
     }
 }

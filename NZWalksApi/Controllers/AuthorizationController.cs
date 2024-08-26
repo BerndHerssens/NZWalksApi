@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,6 +12,7 @@ namespace NZWalksApi.Controllers
     {
         //Do not do this cool thing!
         private string key = "pommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbnpommeazertyuiopqsdfghjklmwxcvbn";
+
         private string CreateJWTToken(string[] roles)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -26,7 +24,7 @@ namespace NZWalksApi.Controllers
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, "Jos@magazijn.com"));
             claims.Add(new Claim(JwtRegisteredClaimNames.Name, "Jos De Magazijnier"));
             claims.Add(new Claim("Hobby", "Dozen verslepen"));
-            
+
             foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
@@ -43,7 +41,7 @@ namespace NZWalksApi.Controllers
                 );
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            
+
             return tokenHandler.WriteToken(token);
         }
 

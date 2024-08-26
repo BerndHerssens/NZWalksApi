@@ -1,5 +1,4 @@
-﻿
-namespace NZWalksApi.Data.Entities
+﻿namespace NZWalksApi.Data.Entities
 {
     public interface IEntity
     {

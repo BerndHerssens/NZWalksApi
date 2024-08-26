@@ -21,11 +21,6 @@ namespace NZWalksApi.Business.Services
             Walk walk = new Walk();
             WalkEntity walkEntity = await _walkRepository.GetWalkByIDAsync(id);
 
-            if (walkEntity == null)
-            {
-                return null;
-            }
-
             walk = _mapper.Map<Walk>(walkEntity);
 
             return walk;
@@ -48,6 +43,7 @@ namespace NZWalksApi.Business.Services
             WalkEntity walkEntity = _mapper.Map<WalkEntity>(walk);
             walkEntity.Created = DateTime.Now;
             walkEntity.Updated = DateTime.Now;
+
             await _walkRepository.AddWalkAsync(walkEntity);
         }
 
@@ -56,20 +52,19 @@ namespace NZWalksApi.Business.Services
             await _walkRepository.DeleteWalkByIDAsync(id);
         }
 
-        public async Task UpdateWalkAsync(int id, Walk walk)
+        public async Task UpdateWalkAsync(int id, Walk updatedWalk)
         {
-            WalkEntity existingWalk = await _walkRepository.GetWalkByIDAsync(id);
-            WalkEntity updatedWalkEntity = _mapper.Map<WalkEntity>(walk);
+            Walk existingWalk = await GetWalkAsync(id);
 
-            existingWalk.Description = updatedWalkEntity.Description;
-            existingWalk.Region = updatedWalkEntity.Region; // TODO
-            existingWalk.RegionID = updatedWalkEntity.RegionID;
-            existingWalk.LengthInKm = updatedWalkEntity.LengthInKm;
-            existingWalk.Name = updatedWalkEntity.Name;
+            existingWalk.Description = updatedWalk.Description;
+            existingWalk.RegionID = updatedWalk.RegionID;
+            existingWalk.LengthInKm = updatedWalk.LengthInKm;
+            existingWalk.Name = updatedWalk.Name;
 
-            existingWalk.Updated = DateTime.Now;
-            await _walkRepository.UpdateWalkAsync(id, existingWalk);
+            WalkEntity entity = _mapper.Map<WalkEntity>(existingWalk);
+            entity.Updated = DateTime.Now;
 
+            await _walkRepository.UpdateWalkAsync(id, entity);
         }
     }
 }

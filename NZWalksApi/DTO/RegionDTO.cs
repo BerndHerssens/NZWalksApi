@@ -1,7 +1,4 @@
-﻿using NZWalksApi.Business.Models;
-using NZWalksApi.Data;
-
-namespace NZWalksApi.DTO
+﻿namespace NZWalksApi.DTO
 {
     public class RegionDTO
     {

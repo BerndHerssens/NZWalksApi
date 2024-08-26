@@ -65,7 +65,6 @@ namespace NZWalksApi.Controllers
             }
         }
 
-
         [HttpPost]
         public async Task<ActionResult> AddRegionAsync(AddRegionDTO addRegion)
         {
@@ -103,6 +102,5 @@ namespace NZWalksApi.Controllers
                 return BadRequest(ModelState);
             }
         }
-
     }
 }

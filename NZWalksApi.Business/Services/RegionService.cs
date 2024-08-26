@@ -20,7 +20,6 @@ namespace NZWalksApi.Business.Services
 
         public async Task<Region> GetRegionAsync(int id)
         {
-
             RegionEntity regionEntity = await _regionRepository.GetRegionByIDAsync(id);
 
             if (regionEntity == null)

@@ -1,4 +1,4 @@
-﻿using NZWalksApi.Data;
+﻿using NZWalksApi.Business.Enums;
 
 namespace NZWalksApi.Business.Models
 {

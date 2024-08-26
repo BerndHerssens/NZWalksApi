@@ -1,6 +1,4 @@
-﻿using NZWalksApi.Data;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace NZWalksApi.DTO
 {
@@ -15,7 +13,6 @@ namespace NZWalksApi.DTO
         public string Beschrijving { get; set; }
 
         [Required]
-        [Range(0, 4)]
-        public BeautyGrade BeautyGrade { get; set; }
+        public int BeautyGrade { get; set; }
     }
 }

@@ -11,11 +11,11 @@ namespace NZWalksApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-
     public class WalksController : ControllerBase
     {
         private IWalkService _walkservice;
         private IMapper _mapper;
+
         public WalksController(IWalkService walkService, IMapper mapper)
         {
             _walkservice = walkService;
@@ -24,7 +24,6 @@ namespace NZWalksApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Reader, Admin, SuperAdmin")]
-        //[Route("GetWalk/{id:int}")]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
             Walk walk = await _walkservice.GetWalkAsync(id);
@@ -39,6 +38,7 @@ namespace NZWalksApi.Controllers
                 return Ok(dto);
             }
         }
+
         [HttpGet]
         [AllowAnonymous]
         [Route("GetAllWalks")]
@@ -56,8 +56,8 @@ namespace NZWalksApi.Controllers
                 return Ok(walkDtos);
             }
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<ActionResult> AddWalkAsync(AddWalkDTO addWalk)
         {
             try
@@ -73,17 +73,14 @@ namespace NZWalksApi.Controllers
                     return BadRequest(ModelState);
                 }
             }
-
             catch (DbUpdateException ex)
             {
                 return BadRequest("Region must exist!");
-
             }
             catch (Exception ex)
             {
                 return StatusCode(500);
             }
-
         }
 
         [HttpDelete]
@@ -96,7 +93,6 @@ namespace NZWalksApi.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Admin,SuperAdmin")]
-
         public async Task<ActionResult> UpdateWalkAsync(int id, UpdateWalkDTO updateWalk)
         {
             if (ModelState.IsValid)

@@ -1,11 +1,9 @@
-﻿using NZWalksApi.Data;
-
-namespace NZWalksApi.DTO
+﻿namespace NZWalksApi.DTO
 {
     public class UpdateRegionDTO
     {
         public string Name { get; set; }
         public string Beschrijving { get; set; }
-        public BeautyGrade BeautyGrade { get; set; }
+        public int BeautyGrade { get; set; }
     }
 }
