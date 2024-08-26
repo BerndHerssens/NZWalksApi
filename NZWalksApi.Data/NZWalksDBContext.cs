@@ -11,13 +11,20 @@ namespace NZWalksApi.Data
 
         public DbSet<RegionEntity> Regions { get; set; }
 
-        public NZWalksDBContext(DbContextOptions<NZWalksDBContext> dbContextOptions)
-            : base(dbContextOptions) { }
+        public DbSet<BeautyGradeEntity> BeautyGrades { get; set; } // Lookup table
+
+        public NZWalksDBContext(DbContextOptions<NZWalksDBContext> dbContextOptions) : base(dbContextOptions)
+        {
+
+        }
 
         // Seeding
         protected override void OnModelCreating(ModelBuilder modelBuilder) //seeding: dummy data
         {
             base.OnModelCreating(modelBuilder);
+
+            List<BeautyGradeEntity> beautyGrades = GenerateBeautyGrades();
+            modelBuilder.Entity<BeautyGradeEntity>().HasData(beautyGrades);
 
             List<RegionEntity> regions = GenerateRegions(10);
             modelBuilder.Entity<RegionEntity>().HasData(regions);
@@ -26,12 +33,16 @@ namespace NZWalksApi.Data
             modelBuilder.Entity<WalkEntity>().HasData(walks);
         }
 
-        public static void Main(string[] args)
+        private List<BeautyGradeEntity> GenerateBeautyGrades()
         {
-            List<WalkEntity> walks = GenerateWalks(50);
-            List<RegionEntity> regions = GenerateRegions(10);
-
-            // Use walks and regions as needed
+            return
+            [
+                new BeautyGradeEntity { ID = 1, Name = "Awful" },
+                new BeautyGradeEntity { ID = 2, Name = "SlightlyDirty" },
+                new BeautyGradeEntity { ID = 3, Name = "Normal" },
+                new BeautyGradeEntity { ID = 4, Name = "Pretty" },
+                new BeautyGradeEntity { ID = 5, Name = "MrPropreClean" }
+            ];
         }
 
         private static List<WalkEntity> GenerateWalks(int numWalks)
@@ -66,7 +77,7 @@ namespace NZWalksApi.Data
                 regionEntities.Add(new RegionEntity()
                 {
                     ID = i,
-                    Name = "Region " + i,
+                    Name = $"Region {i}",
                     Description = $"Description for region {i}",
                     BeautyGrade = random.Next(0, 6), // Randomly assign beauty grade
                     Created = DateTime.Now,

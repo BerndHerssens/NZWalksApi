@@ -8,11 +8,13 @@ namespace NZWalksApi.Business.Services
     public class WalkService : IWalkService
     {
         private readonly IWalkRepository _walkRepository;
+        private readonly IScoreCalculator _scoreCalculator;
         private IMapper _mapper;
 
-        public WalkService(IWalkRepository walkRepository, IMapper mapper)
+        public WalkService(IWalkRepository walkRepository,  IScoreCalculator scoreCalculator, IMapper mapper)
         {
             _walkRepository = walkRepository;
+            _scoreCalculator = scoreCalculator;
             _mapper = mapper;
         }
 
@@ -22,6 +24,7 @@ namespace NZWalksApi.Business.Services
             WalkEntity walkEntity = await _walkRepository.GetWalkByIDAsync(id);
 
             walk = _mapper.Map<Walk>(walkEntity);
+            walk.WalkScore = _scoreCalculator.CalculateWalkScore(walk.LengthInKm, walk.Region.BeautyGrade);
 
             return walk;
         }

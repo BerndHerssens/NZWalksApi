@@ -2,10 +2,10 @@
 {
     public enum BeautyGrade
     {
-        Awful = 0,
-        SlightlyDirty = 1,
-        Normal = 2,
-        Pretty = 3,
-        MrPropreClean = 4,
+        Awful = 1,
+        SlightlyDirty = 2,
+        Normal = 3,
+        Pretty = 4,
+        MrPropreClean = 5,
     }
 }

@@ -23,7 +23,8 @@ namespace NZWalksApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Reader, Admin, SuperAdmin")]
+        //[Authorize(Roles = "Reader, Admin, SuperAdmin")]
+        [AllowAnonymous]
         public async Task<ActionResult<WalkDTO>> GetSpecificWalkAsync(int id)
         {
             Walk walk = await _walkservice.GetWalkAsync(id);

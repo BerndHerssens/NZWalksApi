@@ -95,8 +95,7 @@ namespace NZWalksApi
         {
             //Do not add connectionstring here in production!! This is sensitive information!!
             string connectionString = builder.Configuration.GetConnectionString("NZConnectionString");
-            builder.Services.AddDbContext<NZWalksDBContext>(
-                options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<NZWalksDBContext>(options => options.UseSqlServer(connectionString));
         }
 
         private static void InjectServices(WebApplicationBuilder builder)
@@ -106,6 +105,8 @@ namespace NZWalksApi
             builder.Services.AddScoped<IWalkService, WalkService>();
             builder.Services.AddScoped<IRegionRepository, RegionRepository>();
             builder.Services.AddScoped<IRegionService, RegionService>();
+            builder.Services.AddScoped<IScoreCalculator, ScoreCalculator>();
+            builder.Services.AddScoped<Business.Services.ILogger, Logger>();
         }
     }
 }
